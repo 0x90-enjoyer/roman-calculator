@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Roman Calculator</string>
+
+    <string name="error_1">ERROR:</string>
+    <string name="error_2">OUT OF RANGE</string>
+    <string name="error_3">CLEAR TO RESET</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
