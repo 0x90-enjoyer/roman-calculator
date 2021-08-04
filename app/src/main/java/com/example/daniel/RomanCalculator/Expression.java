@@ -24,25 +24,23 @@ public class Expression extends Observable implements Observer {
 
     public void evaluate() {
         if (values.size() != operators.size() + 1) {
-            notifyObservers();  // TODO: notify of error (incorrect syntax)
+            notifyObservers();  // TODO: notify Display of error (incorrect syntax)
             return;
         }
 
         int result = 0;
-        int num = values.get(0).toInt();
+        int num = values.get(0).getValue();
         int sign = 1;
         int i = 1;
-        boolean multiply = false;
-        boolean divide = false;
 
         for (char op: operators) {
-            int value = values.get(i).toInt();
+            int value = values.get(i).getValue();
             if (op == '×') {
                 num *= value;
             }
             else if (op == '/') {
                 if (value == 0) {
-                    notifyObservers();  // TODO: notify of error (division by zero)
+                    notifyObservers();  // TODO: notify Display of error (division by zero)
                     return;
                 }
                 num /= value;
@@ -61,14 +59,20 @@ public class Expression extends Observable implements Observer {
         }
         result += num * sign;
 
-        Numeral ans = new Numeral(result); // TODO: check if answer is valid
+        Numeral ans = new Numeral(result);
 
-        notifyObservers();  // TODO: notify of answer
+        if (!ans.checkValid()) {
+            notifyObservers();  // TODO: notify Display if answer out of bounds
+        }
+
+        notifyObservers();  // TODO: notify Display of answer
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        // TODO: upon receiving msg indicating '=' has been pressed:
+        // TODO: if digit / roman keypress observed:
+
+        // TODO: if '=' keypress observed:
         evaluate();
     }
 }
