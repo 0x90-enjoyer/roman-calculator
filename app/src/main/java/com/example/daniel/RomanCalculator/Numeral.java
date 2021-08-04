@@ -11,6 +11,7 @@ package com.example.daniel.RomanCalculator;
 
 */
 
+
 public class Numeral {
     private static final int MAX_VALUE = 3999;
     private static final int MIN_VALUE = 1;
@@ -18,6 +19,7 @@ public class Numeral {
     private static final int[] ROMAN_VALUES = {1, 5, 10, 50, 100, 500, 1000};
     private String roman;
     private int value;
+    private boolean isValid;
 
     /**
      * Constructs a Numeral object given a string in the form of roman roman.
@@ -46,8 +48,16 @@ public class Numeral {
      *
      * @return the integer value
      */
-    public int toInt() {
-        return this.value;
+    public int getValue() {
+        return value;
+    }
+
+    public String getRoman() {
+        return roman;
+    }
+
+    public boolean checkValid() {
+        return isValid;
     }
 
     /**
@@ -56,7 +66,7 @@ public class Numeral {
      * @return the string of roman roman
      */
     public String toString() {
-        return this.roman;
+        return String.valueOf(value) + "\t" + roman;
     }
 
     /**
@@ -69,20 +79,22 @@ public class Numeral {
      * if the characters in the string do not follow proper roman numeral
      * numbering convention true - if otherwise
      */
-    public boolean set(String s) {
+    public void set(String s) {
         String characters = "IVXLCDM";
-        for (int i = 0; i < s.length(); i++) {
-            if (!characters.contains("" + s.charAt(i))) {
-                return false;
+        for (int j = 0; j < s.length(); j++) {
+            if (!characters.contains("" + s.charAt(j))) {
+                isValid = false;
+                return;
             }
         }
-        int value = romanToInt(s);
-        if (value > MAX_VALUE || !intToRoman(value).equals(s)) {
-            return false;
+        int i = romanToInt(s);
+        if (i > MAX_VALUE || !intToRoman(i).equals(s)) {
+            isValid = false;
+            return;
         }
-        this.value = value;
-        this.roman = s;
-        return true;
+        value = i;
+        roman = s;
+        isValid = true;
     }
 
     /**
@@ -93,81 +105,14 @@ public class Numeral {
      * @return false - if the given integer is below MIN_VALUE or exceeds MAX_VALUE, true - if
      * otherwise
      */
-    public boolean set(int i) {
+    public void set(int i) {
         if (i < MIN_VALUE || i > MAX_VALUE) {
-            return false;
+            isValid = false;
+            return;
         }
-        this.value = i;
-        this.roman = intToRoman(i);
-        return true;
-    }
-
-    /**
-     * Adds the value of the given object to the value of the Numeral object and
-     * creates new roman accordingly if all conditions are met and returns a
-     * boolean value.
-     *
-     * @param r a Numeral object
-     * @return false - if the new value exceeds MAX_VALUE, true - if otherwise
-     */
-    public boolean add(Numeral r) {
-        if (this.value + r.value > MAX_VALUE) {
-            return false;
-        }
-        this.value += r.value;
-        this.roman = intToRoman(this.value);
-        return true;
-    }
-
-    /**
-     * Subtracts the value of the given object from the value of the Numeral object
-     * and creates new roman accordingly if all conditions are met and returns a
-     * boolean value.
-     *
-     * @param r a Numeral object
-     * @return false - if the new value is below MIN_VALUE, true - if otherwise
-     */
-    public boolean subtract(Numeral r) {
-        if (this.value - r.value < MIN_VALUE) {
-            return false;
-        }
-        this.value -= r.value;
-        this.roman = intToRoman(this.value);
-        return true;
-    }
-
-    /**
-     * Multiplies the value of the given object to the value of the Numeral object and
-     * creates new roman accordingly if all conditions are met and returns a
-     * boolean value.
-     *
-     * @param r a Numeral object
-     * @return false - if the new value exceeds MAX_VALUE, true - if otherwise
-     */
-    public boolean multiply(Numeral r) {
-        if (this.value * r.value > MAX_VALUE) {
-            return false;
-        }
-        this.value *= r.value;
-        this.roman = intToRoman(this.value);
-        return true;
-    }
-
-    /**
-     * Divides the value of the given object from the value of the Numeral object
-     * and creates new roman accordingly if all conditions are met and returns a
-     * boolean value.
-     *
-     * @param r a Numeral object
-     * @return false - if the new value is below MIN_VALUE, true - if otherwise
-     */
-    public boolean divide(Numeral r) {
-        if (this.value / r.value < MIN_VALUE) {
-            return false;
-        }
-        this.value /= r.value;
-        this.roman = intToRoman(this.value);
-        return true;
+        value = i;
+        roman = intToRoman(i);
+        isValid = true;
     }
 
     /**
