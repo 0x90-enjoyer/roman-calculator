@@ -13,8 +13,8 @@ package com.example.daniel.RomanCalculator;
 
 
 public class Numeral {
-    private static final int MAX_VALUE = 3999;
-    private static final int MIN_VALUE = 1;
+    public static final int MAX_VALUE = 3999;
+    public static final int MIN_VALUE = 1;
     private static final String VALID_ROMAN = "IVXLCDM";
     private static final int[] ROMAN_VALUES = {1, 5, 10, 50, 100, 500, 1000};
     private String roman;
@@ -22,11 +22,10 @@ public class Numeral {
     private boolean isValid;
 
     /**
-     * Constructs a Numeral object given a string in the form of roman roman.
-     * Checks if the string given string is valid and raises an error if otherwise.
+     * Constructs a Numeral object given a string in the form of a roman numeral.
+     * Checks if the string given string is valid.
      *
      * @param s the string to be converted into a Numeral object
-     * @throws RuntimeException - if the given roman are invalid
      */
     public Numeral(String s) {
         set(s);
@@ -37,7 +36,6 @@ public class Numeral {
      * valid and raises an error if otherwise.
      *
      * @param i any integer between and including MIN_VALUE-MAX_VALUE
-     * @throws RuntimeException - if the integer is negative or greater than MAX_VALUE
      */
     public Numeral(int i) {
         set(i);
@@ -70,14 +68,10 @@ public class Numeral {
     }
 
     /**
-     * Returns a boolean value depending on whether the given string violates any of
-     * a various number of conditions and sets the object variables accordingly.
+     * Sets instance attributes if string produces a valid roman numeral,
+     * or sets isValid attribute to false otherwise.
      *
      * @param s the string of roman roman
-     * @return false - if the characters of the string are not part of the roman
-     * numeral subset, if the integer value of the numeral exceeds MAX_VALUE, and
-     * if the characters in the string do not follow proper roman numeral
-     * numbering convention true - if otherwise
      */
     public void set(String s) {
         String characters = "IVXLCDM";
@@ -98,12 +92,10 @@ public class Numeral {
     }
 
     /**
-     * Checks if the given integer is less than MIN_VALUE or greater than MAX_VALUE and sets the
-     * object variables if none of the conditions are violated.
+     * Sets instance attributes if integer is valid,
+     * or sets isValid attribute to false otherwise.
      *
      * @param i an integer value
-     * @return false - if the given integer is below MIN_VALUE or exceeds MAX_VALUE, true - if
-     * otherwise
      */
     public void set(int i) {
         if (i < MIN_VALUE || i > MAX_VALUE) {
@@ -116,11 +108,10 @@ public class Numeral {
     }
 
     /**
-     * Converts an integer to a String of roman roman and returns the String.
-     * This is done through the manipulation of place value.
+     * Returns the roman equivalent of the given integer as a String.
      *
-     * @param num the integer to be converted to a String
-     * @return the resulting String
+     * @param num an integer
+     * @return the roman equivalent of the given integer as a String.
      */
     public static String intToRoman(int num) {
         StringBuilder result = new StringBuilder();
@@ -148,11 +139,10 @@ public class Numeral {
     }
 
     /**
-     * Converts a String of roman roman to its integer value and returns the
-     * integer.
+     * Returns the integer equivalent of the given roman numeral represented by s.
      *
-     * @param s the given string of roman roman
-     * @return the resulting integer
+     * @param s a roman numeral
+     * @return the integer equivalent of the given roman numeral represented by s.
      */
     public static int romanToInt(String s) {
         int total = 0;
