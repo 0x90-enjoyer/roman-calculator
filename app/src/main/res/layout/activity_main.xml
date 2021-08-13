@@ -109,7 +109,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:onClick="delete"
+                    android:tag="delete"
                     android:text="D"
                     android:textColor="@android:color/holo_orange_light"
                     app:autoSizeTextType="uniform" />
@@ -119,7 +119,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:onClick="clear"
+                    android:tag="clear"
                     android:text="C"
                     android:textColor="@android:color/holo_red_light"
                     app:autoSizeTextType="uniform" />
@@ -135,7 +135,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:onClick="operation"
+                    android:tag="×"
                     android:text="×"
                     android:textColor="@android:color/holo_blue_light"
                     app:autoSizeTextType="uniform" />
@@ -145,8 +145,8 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:onClick="operation"
-                    android:text="÷"
+                    android:tag="/"
+                    android:text="/"
                     android:textColor="@android:color/holo_blue_light"
                     app:autoSizeTextType="uniform" />
 
@@ -162,7 +162,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:onClick="operation"
+                    android:tag="+"
                     android:text="+"
                     android:textColor="@android:color/holo_blue_light"
                     app:autoSizeTextType="uniform" />
@@ -172,7 +172,7 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:onClick="operation"
+                    android:tag="-"
                     android:text="-"
                     android:textColor="@android:color/holo_blue_light"
                     app:autoSizeTextType="uniform" />
@@ -190,7 +190,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_span="2"
-                    android:onClick="equal"
+                    android:tag="="
                     android:text="="
                     android:textColor="@android:color/holo_green_light"
                     app:autoSizeTextType="uniform" />

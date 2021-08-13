@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
+    private Expression exp;
     int mNoOfTabs;
 
     /**
@@ -15,9 +16,10 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
      *           activity
      * @param NumberOfTabs the number of tabs present in the TabLayout
      */
-    public PagerAdapter(FragmentManager fm, int NumberOfTabs) {
+    public PagerAdapter(FragmentManager fm, int NumberOfTabs, Expression exp) {
         super(fm);
         this.mNoOfTabs = NumberOfTabs;
+        this.exp = exp;
     }
 
     /**
@@ -30,9 +32,9 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new IntegerFragment();
+                return IntegerFragment.newInstance(exp);
             case 1:
-                return new RomanFragment();
+                return RomanFragment.newInstance(exp);
             default:
                 return null;
         }
