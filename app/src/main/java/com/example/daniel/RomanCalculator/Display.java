@@ -1,5 +1,6 @@
 package com.example.daniel.RomanCalculator;
 
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 import java.util.Observable;
@@ -7,11 +8,10 @@ import java.util.Observer;
 
 public abstract class Display implements Observer {
     protected TextView view;
-    private String text;
 
     public Display(TextView view) {
         this.view = view;
-        this.text = "";
+        this.view.setMovementMethod(new ScrollingMovementMethod());
     }
 
     // Display observes Expression

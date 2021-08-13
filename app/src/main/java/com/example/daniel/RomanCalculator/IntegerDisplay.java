@@ -11,6 +11,12 @@ public class IntegerDisplay extends Display {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        Expression exp = (Expression) o;
+        if (exp.getResult() != null) {
+            view.setText(String.valueOf(exp.getResult().getValue()));
+        }
+        else {
+            view.setText(exp.getCurrentInt());
+        }
     }
 }

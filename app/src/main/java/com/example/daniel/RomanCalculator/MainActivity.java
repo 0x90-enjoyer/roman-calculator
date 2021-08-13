@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements IntegerFragment.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initializing model and hooking controllers
         ArrayList<Button> buttons = new ArrayList<>();
 
         buttons.add(findViewById(R.id.button_del));
@@ -39,6 +40,15 @@ public class MainActivity extends AppCompatActivity implements IntegerFragment.O
         Keypad kp = new Keypad(buttons);
         kp.addObserver(exp);
 
+        ExpressionDisplay eDisplay = new ExpressionDisplay(findViewById(R.id.display_exp));
+        IntegerDisplay iDisplay = new IntegerDisplay(findViewById(R.id.display_int));
+        RomanDisplay rDisplay = new RomanDisplay(findViewById(R.id.display_roman));
+
+        exp.addObserver(eDisplay);
+        exp.addObserver(iDisplay);
+        exp.addObserver(rDisplay);
+
+        // Setting up Fragments
         TabLayout tabLayout = findViewById(R.id.tablayout);
         tabLayout.addTab(tabLayout.newTab().setText("Integer"));
         tabLayout.addTab(tabLayout.newTab().setText("Roman"));

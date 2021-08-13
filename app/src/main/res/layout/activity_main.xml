@@ -33,46 +33,45 @@
         app:tabIndicatorColor="@android:color/holo_blue_light"
         app:tabSelectedTextColor="@android:color/holo_blue_light" />
 
-    <EditText
-        android:id="@+id/display_1"
+    <TextView
+        android:id="@+id/display_exp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@null"
-        android:cursorVisible="false"
         android:ems="10"
         android:gravity="center_vertical|end"
-        android:inputType="text"
+        android:focusable="true"
+        android:ellipsize="none"
+        android:scrollbars="horizontal"
         android:singleLine="true"
         android:textColor="#FFFFFF"
         android:textIsSelectable="true"
         android:textSize="24sp" />
 
-    <EditText
-        android:id="@+id/display_2"
+    <TextView
+        android:id="@+id/display_int"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@null"
-        android:cursorVisible="false"
         android:ems="10"
         android:gravity="center_vertical|end"
-        android:inputType="text"
+        android:focusable="false"
         android:singleLine="true"
         android:textColor="#FFFFFF"
         android:textIsSelectable="true"
         android:textSize="36sp" />
 
-    <EditText
-        android:id="@+id/display_3"
+    <TextView
+        android:id="@+id/display_roman"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@null"
-        android:cursorVisible="false"
         android:ems="10"
         android:gravity="center_vertical|end"
-        android:inputType="text"
+        android:focusable="false"
         android:singleLine="true"
         android:textColor="#FFFFFF"
         android:textIsSelectable="true"

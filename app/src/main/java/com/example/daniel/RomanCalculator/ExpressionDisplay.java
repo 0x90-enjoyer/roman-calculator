@@ -11,6 +11,12 @@ public class ExpressionDisplay extends Display {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        Expression exp = (Expression) o;
+        if (arg != null) {
+            view.setText((String) arg);
+        }
+        else {
+            view.setText(exp.getExpression());
+        }
     }
 }
