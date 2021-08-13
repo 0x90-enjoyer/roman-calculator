@@ -51,9 +51,8 @@ public class Expression extends Observable implements Observer, Serializable {
         if (currentRoman.isEmpty() && Integer.parseInt(currentInt + s) <= Numeral.MAX_VALUE) {
             if (!currentInt.isEmpty() || !s.equals("0")) {
                 currentInt += s;
-//                result = null;
                 setChanged();
-                notifyObservers();  // notify IntegerDisplay of new digit
+                notifyObservers();
             }
         }
     }
@@ -63,9 +62,8 @@ public class Expression extends Observable implements Observer, Serializable {
             Numeral test = new Numeral(currentRoman + s);
             if (test.checkValid()) {
                 currentRoman += s;
-//                result = null;
                 setChanged();
-                notifyObservers();  // notify RomanDisplay of new char
+                notifyObservers();
             }
         }
     }
@@ -75,28 +73,26 @@ public class Expression extends Observable implements Observer, Serializable {
             values.add(new Numeral(Integer.valueOf(currentInt)));
             expression += currentInt + " " + op + " ";
             currentInt = "";
-//            result = null;
             if (op.equals("=")) {
                 evaluate();
             }
             else {
                 operators.add(op.toCharArray()[0]);
                 setChanged();
-                notifyObservers();  // notify ExpressionDisplay to append and IntegerDisplay to clear
+                notifyObservers();
             }
         }
         else if (currentInt.isEmpty() && !currentRoman.isEmpty()) {
             values.add(new Numeral(currentRoman));
             expression += currentRoman + " " + op + " ";
             currentRoman = "";
-//            result = null;
             if (op.equals("=")) {
                 evaluate();
             }
             else {
                 operators.add(op.toCharArray()[0]);
                 setChanged();
-                notifyObservers();  // notify ExpressionDisplay to append and RomanDisplay to clear
+                notifyObservers();
             }
         }
     }
@@ -106,12 +102,12 @@ public class Expression extends Observable implements Observer, Serializable {
             if (!currentInt.isEmpty() && currentRoman.isEmpty()) {
                 currentInt = currentInt.substring(0, currentInt.length() - 1);
                 setChanged();
-                notifyObservers();  // notify IntegerDisplay to delete digit
+                notifyObservers();
             }
             else if (currentInt.isEmpty() && !currentRoman.isEmpty()) {
                 currentRoman = currentRoman.substring(0, currentRoman.length() - 1);
                 setChanged();
-                notifyObservers();  // notify RomanDisplay to delete character
+                notifyObservers();
             }
         }
     }
@@ -124,7 +120,7 @@ public class Expression extends Observable implements Observer, Serializable {
         expression = "";
         result = null;
         setChanged();
-        notifyObservers();  // notify all Displays to clear
+        notifyObservers();
     }
 
     public void resultClear() {
@@ -135,7 +131,7 @@ public class Expression extends Observable implements Observer, Serializable {
     public void evaluate() {
         if (values.size() != operators.size() + 1) {
             setChanged();
-            notifyObservers();  // TODO: notify Display of error (incorrect syntax)
+            notifyObservers("Syntax Error");
             return;
         }
 
@@ -152,7 +148,7 @@ public class Expression extends Observable implements Observer, Serializable {
             else if (op == '/') {
                 if (value == 0) {
                     setChanged();
-                    notifyObservers();  // TODO: notify Display of error (division by zero)
+                    notifyObservers();
                     return;
                 }
                 num /= value;
@@ -179,7 +175,7 @@ public class Expression extends Observable implements Observer, Serializable {
 
         if (!ans.checkValid()) {
             setChanged();
-            notifyObservers("Out of Bounds");  // TODO: notify Display if answer out of bounds
+            notifyObservers("Out of Bounds");
         }
         else {
             this.expression = saved_exp;
@@ -187,7 +183,7 @@ public class Expression extends Observable implements Observer, Serializable {
             currentRoman = ans.getRoman();
 
             setChanged();
-            notifyObservers();  // TODO: notify Display of answer
+            notifyObservers();
 
             resultClear();
         }
