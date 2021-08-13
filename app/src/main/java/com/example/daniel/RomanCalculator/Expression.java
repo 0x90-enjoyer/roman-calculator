@@ -9,20 +9,50 @@ public class Expression extends Observable implements Observer, Serializable {
     private ArrayList<Numeral> values;
     private ArrayList<Character> operators;
     private String currentInt;
-    private String currentString;
-    // Display observes Expression, Expression observes Keypad
+    private String currentRoman;
+    private String expression;
+    private Numeral result;
+// Display observes Expression, Expression observes Keypad
 
     public Expression() {
         this.values = new ArrayList<>();
         this.operators = new ArrayList<>();
         this.currentInt = "";
-        this.currentString = "";
+        this.currentRoman = "";
+        this.expression = "";
+        this.result = null;
+    }
+
+    public ArrayList<Numeral> getValues() {
+        return values;
+    }
+
+    public ArrayList<Character> getOperators() {
+        return operators;
+    }
+
+    public String getCurrentInt() {
+        return currentInt;
+    }
+
+    public String getCurrentRoman() {
+        return currentRoman;
+    }
+
+    public String getExpression() {
+        return expression;
+    }
+
+    public Numeral getResult() {
+        return result;
     }
 
     public void inputInteger(String s) {
-        if (currentString.isEmpty() && Integer.parseInt(currentInt + s) <= Numeral.MAX_VALUE) {
+        if (currentRoman.isEmpty() && Integer.parseInt(currentInt + s) <= Numeral.MAX_VALUE) {
             if (!currentInt.isEmpty() || !s.equals("0")) {
                 currentInt += s;
+//                result = null;
+                setChanged();
                 notifyObservers();  // notify IntegerDisplay of new digit
             }
         }
@@ -30,44 +60,59 @@ public class Expression extends Observable implements Observer, Serializable {
 
     public void inputRoman(String s) {
         if (currentInt.isEmpty()) {
-            currentString += s;
-            notifyObservers();  // notify RomanDisplay of new char
+            Numeral test = new Numeral(currentRoman + s);
+            if (test.checkValid()) {
+                currentRoman += s;
+//                result = null;
+                setChanged();
+                notifyObservers();  // notify RomanDisplay of new char
+            }
         }
     }
 
     public void inputOperator(String op) {
-        if (!currentInt.isEmpty() && currentString.isEmpty()) {
+        if (!currentInt.isEmpty() && currentRoman.isEmpty()) {
             values.add(new Numeral(Integer.valueOf(currentInt)));
+            expression += currentInt + " " + op + " ";
             currentInt = "";
+//            result = null;
             if (op.equals("=")) {
                 evaluate();
             }
             else {
                 operators.add(op.toCharArray()[0]);
+                setChanged();
                 notifyObservers();  // notify ExpressionDisplay to append and IntegerDisplay to clear
             }
         }
-        else if (currentInt.isEmpty() && !currentString.isEmpty()) {
-            values.add(new Numeral(currentString));
-            currentString = "";
+        else if (currentInt.isEmpty() && !currentRoman.isEmpty()) {
+            values.add(new Numeral(currentRoman));
+            expression += currentRoman + " " + op + " ";
+            currentRoman = "";
+//            result = null;
             if (op.equals("=")) {
                 evaluate();
             }
             else {
                 operators.add(op.toCharArray()[0]);
+                setChanged();
                 notifyObservers();  // notify ExpressionDisplay to append and RomanDisplay to clear
             }
         }
     }
 
     public void inputDelete() {
-        if (!currentInt.isEmpty() && currentString.isEmpty()) {
-            currentInt = currentInt.substring(0, currentInt.length() - 1);
-            notifyObservers();  // notify IntegerDisplay to delete digit
-        }
-        else if (currentInt.isEmpty() && !currentString.isEmpty()) {
-            currentString = currentString.substring(0, currentString.length() - 1);
-            notifyObservers();  // notify RomanDisplay to delete character
+        if (result == null) {
+            if (!currentInt.isEmpty() && currentRoman.isEmpty()) {
+                currentInt = currentInt.substring(0, currentInt.length() - 1);
+                setChanged();
+                notifyObservers();  // notify IntegerDisplay to delete digit
+            }
+            else if (currentInt.isEmpty() && !currentRoman.isEmpty()) {
+                currentRoman = currentRoman.substring(0, currentRoman.length() - 1);
+                setChanged();
+                notifyObservers();  // notify RomanDisplay to delete character
+            }
         }
     }
 
@@ -75,20 +120,21 @@ public class Expression extends Observable implements Observer, Serializable {
         values.clear();
         operators.clear();
         currentInt = "";
-        currentString = "";
+        currentRoman = "";
+        expression = "";
+        result = null;
+        setChanged();
         notifyObservers();  // notify all Displays to clear
     }
 
-    public void add(Numeral value) {
-        values.add(value);
-    }
-
-    public void add(char operator) {
-        operators.add(operator);
+    public void resultClear() {
+        expression = "";
+        result = null;
     }
 
     public void evaluate() {
         if (values.size() != operators.size() + 1) {
+            setChanged();
             notifyObservers();  // TODO: notify Display of error (incorrect syntax)
             return;
         }
@@ -105,6 +151,7 @@ public class Expression extends Observable implements Observer, Serializable {
             }
             else if (op == '/') {
                 if (value == 0) {
+                    setChanged();
                     notifyObservers();  // TODO: notify Display of error (division by zero)
                     return;
                 }
@@ -126,14 +173,23 @@ public class Expression extends Observable implements Observer, Serializable {
 
         Numeral ans = new Numeral(result);
 
+        String saved_exp = expression;
+
+        inputClear();
+
         if (!ans.checkValid()) {
-            notifyObservers();  // TODO: notify Display if answer out of bounds
+            setChanged();
+            notifyObservers("Out of Bounds");  // TODO: notify Display if answer out of bounds
         }
         else {
+            this.expression = saved_exp;
+            this.result = ans;
+            currentRoman = ans.getRoman();
+
+            setChanged();
             notifyObservers();  // TODO: notify Display of answer
 
-            inputClear();
-            currentString = ans.getRoman();
+            resultClear();
         }
     }
 

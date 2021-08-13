@@ -11,6 +11,12 @@ public class RomanDisplay extends Display {
 
     @Override
     public void update(Observable o, Object arg) {
-
+        Expression exp = (Expression) o;
+        if (exp.getResult() != null) {
+            view.setText(exp.getResult().getRoman());
+        }
+        else {
+            view.setText(exp.getCurrentRoman());
+        }
     }
 }
